@@ -25,8 +25,8 @@ readonly cmd="$(find_executable)"
 if [ -z "$cmd" ]; then
   tmux display-message "Failed to load tmux-urlview: neither urlview nor extract_url were found on the PATH"
 else
-  tmux bind-key "$key" capture-pane -J \\\; \
-    save-buffer "${TMPDIR:-/tmp}/tmux-buffer" \\\; \
-    delete-buffer \\\; \
+  tmux bind-key "$key" capture-pane -b urlview -S - \\\; \
+    save-buffer -b urlview "${TMPDIR:-/tmp}/tmux-buffer" \\\; \
+    delete-buffer -b urlview \\\; \
     split-window -l 10 "$cmd '${TMPDIR:-/tmp}/tmux-buffer'"
 fi
